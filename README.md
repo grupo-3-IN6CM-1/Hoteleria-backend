@@ -1,3 +1,3 @@
 # Hoteleria-backend
 >[!IMPORTANT]
->Agregar un usuario default a la base de datos
+>Login y register totalmente funcional
