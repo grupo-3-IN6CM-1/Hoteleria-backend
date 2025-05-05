@@ -1,0 +1,154 @@
+{
+	"info": {
+		"_postman_id": "583b3e15-7753-4a58-acc2-bfba6e9bd8db",
+		"name": "Hotels",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42630298"
+	},
+	"item": [
+		{
+			"name": "Listar",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/Hoteleria/v1/hotels",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"Hoteleria",
+						"v1",
+						"hotels"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar por ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/Hoteleria/v1/hotels/68194996f4f79853a7f70ef0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"Hoteleria",
+						"v1",
+						"hotels",
+						"68194996f4f79853a7f70ef0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODE5M2Y5NTU5NjMyZTkyZWVmOTRlYjciLCJpYXQiOjE3NDY0ODc1ODYsImV4cCI6MTc0NjQ5MTE4Nn0.JIe994b39fadb4CZbChdiAdw_LgkfVYeUgg6tqS-XWY",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Hotel Aurora\",\r\n  \"address\": \"5ta Avenida 12-34, Zona 10, Ciudad de Guatemala\",\r\n  \"description\": \"Hotel moderno con excelente ubicación y servicio de lujo.\",\r\n  \"category\": \"LUJO\",\r\n  \"amenities\": [\"WIFI\", \"PISCINA\", \"GYM\", \"SERVICIO_HABITACION\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/Hoteleria/v1/hotels",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"Hoteleria",
+						"v1",
+						"hotels"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Desactivar",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODE5M2Y5NTU5NjMyZTkyZWVmOTRlYjciLCJpYXQiOjE3NDY0ODc1ODYsImV4cCI6MTc0NjQ5MTE4Nn0.JIe994b39fadb4CZbChdiAdw_LgkfVYeUgg6tqS-XWY",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/Hoteleria/v1/hotels/68194996f4f79853a7f70ef0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"Hoteleria",
+						"v1",
+						"hotels",
+						"68194996f4f79853a7f70ef0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODE5M2Y5NTU5NjMyZTkyZWVmOTRlYjciLCJpYXQiOjE3NDY0ODc1ODYsImV4cCI6MTc0NjQ5MTE4Nn0.JIe994b39fadb4CZbChdiAdw_LgkfVYeUgg6tqS-XWY",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Hotel Aurora Centro\",\r\n  \"description\": \"Hotel remodelado con spa, gimnasio y más servicios.\",\r\n  \"amenities\": [\"WIFI\", \"GYM\", \"SPA\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/Hoteleria/v1/hotels/68194996f4f79853a7f70ef0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"Hoteleria",
+						"v1",
+						"hotels",
+						"68194996f4f79853a7f70ef0"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
