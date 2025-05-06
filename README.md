@@ -1,3 +1,3 @@
 # Hoteleria-backend
 >[!IMPORTANT]
->Reservations terminados
+>Events funcionando

@@ -10,6 +10,7 @@ import authRoutes from '../src/auth/auth.routes.js'
 import hotelRoutes from '../src/hotel/hotel.routes.js'
 import roomRoutes from '../src/room/room.routes.js'
 import reservationRoutes from '../src/reservation/reservation.routes.js';
+import eventRoutes from '../src/event/event.routes.js'
 
 const middlewares = (app) => {
     app.use(express.urlencoded({ extended: false }));
@@ -25,6 +26,7 @@ const routes = (app) => {
     app.use("/Hoteleria/v1/hotels", hotelRoutes);
     app.use("/Hoteleria/v1/rooms", roomRoutes);
     app.use("/Hoteleria/v1/reservations", reservationRoutes);
+    app.use("/Hoteleria/v1/events", eventRoutes);
 }
  
 const conectarDB = async () => {
