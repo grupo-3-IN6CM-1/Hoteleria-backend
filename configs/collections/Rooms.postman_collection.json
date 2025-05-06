@@ -1,0 +1,163 @@
+{
+	"info": {
+		"_postman_id": "d00616e2-acfb-4398-af98-7d0f65a684b0",
+		"name": "Rooms",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42630298"
+	},
+	"item": [
+		{
+			"name": "Agregar",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODE5M2Y5NTU5NjMyZTkyZWVmOTRlYjciLCJpYXQiOjE3NDY0ODkyODgsImV4cCI6MTc0NjQ5Mjg4OH0.Kml45dsL2DC9s_h4Qz66TAGXiBWy8UBsah5Wwr6635Y",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"hotel\": \"68194996f4f79853a7f70ef0\",\r\n  \"number\": \"A-201\",\r\n  \"type\": \"DOBLE\",\r\n  \"capacity\": 2,\r\n  \"pricePerNight\": 85.5,\r\n  \"description\": \"Habitación doble con vista al jardín y baño privado.\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/Hoteleria/v1/rooms",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"Hoteleria",
+						"v1",
+						"rooms"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/Hoteleria/v1/rooms",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"Hoteleria",
+						"v1",
+						"rooms"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar por ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/Hoteleria/v1/rooms/68194fec3b4f5d7ee71c5e47",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"Hoteleria",
+						"v1",
+						"rooms",
+						"68194fec3b4f5d7ee71c5e47"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODE5M2Y5NTU5NjMyZTkyZWVmOTRlYjciLCJpYXQiOjE3NDY0ODk2MTYsImV4cCI6MTc0NjQ5MzIxNn0.DW_bhhGhWnBEOVDAdCBjlg_qkGInRSVXiMiqk-xT0OQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"pricePerNight\": 92.75,\r\n  \"description\": \"Actualizada: incluye desayuno buffet y acceso al gimnasio.\",\r\n  \"available\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/Hoteleria/v1/rooms/68194fec3b4f5d7ee71c5e47",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"Hoteleria",
+						"v1",
+						"rooms",
+						"68194fec3b4f5d7ee71c5e47"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODE5M2Y5NTU5NjMyZTkyZWVmOTRlYjciLCJpYXQiOjE3NDY0ODk2MTYsImV4cCI6MTc0NjQ5MzIxNn0.DW_bhhGhWnBEOVDAdCBjlg_qkGInRSVXiMiqk-xT0OQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/Hoteleria/v1/rooms/68194fec3b4f5d7ee71c5e47",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"Hoteleria",
+						"v1",
+						"rooms",
+						"68194fec3b4f5d7ee71c5e47"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
