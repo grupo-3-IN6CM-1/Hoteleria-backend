@@ -1,3 +1,3 @@
 # Hoteleria-backend
 >[!IMPORTANT]
->Rooms terminados
+>Reservations terminados

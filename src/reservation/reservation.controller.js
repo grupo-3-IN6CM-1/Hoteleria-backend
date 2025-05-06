@@ -1,0 +1,185 @@
+import { response } from "express";
+import Reservation from "./reservation.model.js";
+import Room from "../room/room.model.js";
+
+export const createReservation = async (req, res = response) => {
+    try {
+        const { hotel, room, checkIn, checkOut } = req.body;
+        const userId = req.usuario._id;
+
+        const selectedRoom = await Room.findById(room);
+        if (!selectedRoom || !selectedRoom.estado) {
+            return res.status(404).json({
+                success: false,
+                msg: "Room not found or inactive ❌"
+            });
+        }
+
+        const overlap = await Reservation.findOne({
+            room,
+            estado: true,
+            $or: [
+                {
+                    checkIn: { $lt: new Date(checkOut) },
+                    checkOut: { $gt: new Date(checkIn) }
+                }
+            ]
+        });
+
+        if (overlap) {
+            return res.status(400).json({
+                success: false,
+                msg: "Room already reserved for the selected dates 📅❌"
+            });
+        }
+
+        const days = (new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24);
+        if (days < 1) {
+            return res.status(400).json({
+                success: false,
+                msg: "Reservation must be at least 1 day 📆❌"
+            });
+        }
+
+        const totalPrice = days * selectedRoom.pricePerNight;
+
+        const reservation = new Reservation({
+            user: userId,
+            hotel,
+            room,
+            checkIn,
+            checkOut,
+            totalPrice
+        });
+
+        await reservation.save();
+
+        res.status(201).json({
+            success: true,
+            msg: "Reservation created successfully ✅",
+            reservation
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            msg: "Error creating reservation ❌",
+            error
+        });
+    }
+};
+
+export const getReservations = async (req, res = response) => {
+    try {
+        const reservations = await Reservation.find({ estado: true })
+            .populate("user", "name email")
+            .populate("hotel", "name")
+            .populate("room", "number type");
+
+        res.status(200).json({
+            success: true,
+            reservations
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            msg: "Error fetching reservations ❌",
+            error
+        });
+    }
+};
+
+export const getReservationById = async (req, res = response) => {
+    try {
+        const { id } = req.params;
+
+        const reservation = await Reservation.findById(id)
+            .populate("user", "name email")
+            .populate("hotel", "name")
+            .populate("room", "number type");
+
+        if (!reservation || !reservation.estado) {
+            return res.status(404).json({
+                success: false,
+                msg: "Reservation not found ❌"
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            reservation
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            msg: "Error fetching reservation ❌",
+            error
+        });
+    }
+};
+
+export const updateReservationStatus = async (req, res = response) => {
+    try {
+        const { id } = req.params;
+        const { status } = req.body;
+
+        const reservation = await Reservation.findById(id);
+        if (!reservation) {
+            return res.status(404).json({
+                success: false,
+                msg: "Reservation not found ❌"
+            });
+        }
+
+        reservation.status = status;
+        await reservation.save();
+
+        res.status(200).json({
+            success: true,
+            msg: "Reservation status updated ✅",
+            reservation
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            msg: "Error updating reservation ❌",
+            error
+        });
+    }
+};
+
+export const deleteReservation = async (req, res = response) => {
+    try {
+        const { id } = req.params;
+
+        const reservation = await Reservation.findById(id);
+        if (!reservation) {
+            return res.status(404).json({
+                success: false,
+                msg: "Reservation not found ❌"
+            });
+        }
+
+        reservation.estado = false;
+        await reservation.save();
+
+        res.status(200).json({
+            success: true,
+            msg: "Reservation deleted (soft delete) ✅"
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            msg: "Error deleting reservation ❌",
+            error
+        });
+    }
+};

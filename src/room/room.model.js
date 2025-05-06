@@ -30,10 +30,6 @@ const RoomSchema = Schema({
         type: String,
         maxLength: [500, "Description can't exceed 500 characters"]
     },
-    available: {
-        type: Boolean,
-        default: true
-    },
     estado: {
         type: Boolean,
         default: true
