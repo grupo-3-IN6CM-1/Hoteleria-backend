@@ -1,0 +1,154 @@
+{
+	"info": {
+		"_postman_id": "6b294931-4edb-43c8-bf4b-8890faeea389",
+		"name": "Event",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42630298"
+	},
+	"item": [
+		{
+			"name": "Crear",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODE5M2Y5NTU5NjMyZTkyZWVmOTRlYjciLCJpYXQiOjE3NDY0OTYwMzQsImV4cCI6MTc0NjQ5OTYzNH0.hWZPc-Xcj6SlXExPQs9nFSGxwji2yK1AO2qD25B3I78",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"hotel\": \"6640f123a2b3c456d7e8f901\",\r\n  \"title\": \"Fiesta de Fin de Año\",\r\n  \"description\": \"Gran celebración con música, cena y fuegos artificiales.\",\r\n  \"date\": \"2025-12-31T21:00:00.000Z\",\r\n  \"resources\": [\"68196f6063d4855b1e49ba9e\", \"6819709e652f1614e05eac8e\"],\r\n  \"services\": [\"68196ce7f555f4a3e49f4b24\"],\r\n  \"price\": 5000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/Hoteleria/v1/events",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"Hoteleria",
+						"v1",
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/Hoteleria/v1/events",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"Hoteleria",
+						"v1",
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar por ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/Hoteleria/v1/events/681970ae652f1614e05eac91",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"Hoteleria",
+						"v1",
+						"events",
+						"681970ae652f1614e05eac91"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODE5M2Y5NTU5NjMyZTkyZWVmOTRlYjciLCJpYXQiOjE3NDY0OTYyODIsImV4cCI6MTc0NjQ5OTg4Mn0.csQKc_HJyjJSq-NafeqxLJI7lV4mLkSQLeymi8UuoRs",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Fiesta de Año Nuevo VIP\",\r\n  \"price\": 6000,\r\n  \"description\": \"Evento mejorado con servicio de catering premium y banda en vivo.\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/Hoteleria/v1/events/68196a2da8ebd6a92efc0a1b",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"Hoteleria",
+						"v1",
+						"events",
+						"68196a2da8ebd6a92efc0a1b"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODE5M2Y5NTU5NjMyZTkyZWVmOTRlYjciLCJpYXQiOjE3NDY0OTYyODIsImV4cCI6MTc0NjQ5OTg4Mn0.csQKc_HJyjJSq-NafeqxLJI7lV4mLkSQLeymi8UuoRs",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/Hoteleria/v1/events/681970ae652f1614e05eac91",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"Hoteleria",
+						"v1",
+						"events",
+						"681970ae652f1614e05eac91"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,154 @@
+{
+	"info": {
+		"_postman_id": "64ecf9f6-160e-4a51-ab1f-f91a77ffd97a",
+		"name": "Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42630298"
+	},
+	"item": [
+		{
+			"name": "Agregar",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODE5M2Y5NTU5NjMyZTkyZWVmOTRlYjciLCJpYXQiOjE3NDY0OTY3MjAsImV4cCI6MTc0NjUwMDMyMH0.LKadjinK8-NcoX-c27F2Cr9t62zLe6o8R5pfa6QJ_mA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Catering Premium\",\r\n  \"description\": \"Servicio de comida gourmet con menú personalizado.\",\r\n  \"price\": 1500\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/Hoteleria/v1/services",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"Hoteleria",
+						"v1",
+						"services"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/Hoteleria/v1/services",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"Hoteleria",
+						"v1",
+						"services"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar por ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/Hoteleria/v1/services/68196ce7f555f4a3e49f4b24",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"Hoteleria",
+						"v1",
+						"services",
+						"68196ce7f555f4a3e49f4b24"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODE5M2Y5NTU5NjMyZTkyZWVmOTRlYjciLCJpYXQiOjE3NDY0OTY4OTQsImV4cCI6MTc0NjUwMDQ5NH0.Uyj-tqNmUqAFJxrPl1G2oRyM57CsZeVW_zql7dSizzc",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Catering VIP\",\r\n  \"price\": 2000,\r\n  \"description\": \"Servicio actualizado con opciones de chef privado y bebidas exclusivas.\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/Hoteleria/v1/services/68196ce7f555f4a3e49f4b24",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"Hoteleria",
+						"v1",
+						"services",
+						"68196ce7f555f4a3e49f4b24"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODE5M2Y5NTU5NjMyZTkyZWVmOTRlYjciLCJpYXQiOjE3NDY0OTY5OTcsImV4cCI6MTc0NjUwMDU5N30.fO5aRc0suKv5K4Rj-FqN41ptumqH2v80fT9sq33MS4c",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/Hoteleria/v1/services/68196ce7f555f4a3e49f4b24",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"Hoteleria",
+						"v1",
+						"services",
+						"68196ce7f555f4a3e49f4b24"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
