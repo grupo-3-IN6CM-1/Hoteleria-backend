@@ -13,6 +13,7 @@ import reservationRoutes from '../src/reservation/reservation.routes.js';
 import eventRoutes from '../src/event/event.routes.js'
 import serviceRoutes from '../src/service/service.routes.js'
 import resourceRoutes from '../src/resource/resource.routes.js';
+import invoiceRoutes from '../src/invoice/invoice.routes.js'
 
 const middlewares = (app) => {
     app.use(express.urlencoded({ extended: false }));
@@ -31,6 +32,7 @@ const routes = (app) => {
     app.use("/Hoteleria/v1/events", eventRoutes);
     app.use("/Hoteleria/v1/services", serviceRoutes);
     app.use("/Hoteleria/v1/resources", resourceRoutes);
+    app.use("/Hoteleria/v1/invoice", invoiceRoutes);
 }
  
 const conectarDB = async () => {
