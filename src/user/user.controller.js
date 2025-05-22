@@ -87,3 +87,33 @@ export const updateUserByAdmin = async (req, res) => {
     });
   }
 };
+
+export const getUsersByRole = async (req, res) => {
+  try {
+    const { role } = req.query;
+
+    if (!role) {
+      return res.status(400).json({
+        success: false,
+        msg: "El parámetro 'role' es obligatorio",
+      });
+    }
+
+    const users = await User.find({
+      role: role.toUpperCase(),
+      estado: true,
+    }).select("name email username");
+
+    return res.status(200).json({
+      success: true,
+      users,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      msg: "Error al obtener usuarios",
+      error,
+    });
+  }
+};

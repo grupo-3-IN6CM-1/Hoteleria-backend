@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { updateMyProfile, updateUserByAdmin } from "../user/user.controller.js";
+import { updateMyProfile, updateUserByAdmin, getUsersByRole } from "../user/user.controller.js";
 import { validarJWT } from "../middlewares/validar-jwt.js";
 import { tieneRole } from "../middlewares/validar-roles.js"; 
 import { check } from "express-validator";
@@ -27,5 +27,16 @@ router.put(
   ],
   updateUserByAdmin
 );
+
+router.get(
+  "/",
+  [
+    validarJWT,
+    tieneRole("PLATFORM_ADMIN"), 
+    check("role", "El rol es requerido").notEmpty(),
+  ],
+  getUsersByRole
+);
+
 
 export default router;

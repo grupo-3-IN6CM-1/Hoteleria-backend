@@ -94,41 +94,42 @@ export const getHotelById = async (req, res = response) => {
 };
 
 export const updateHotel = async (req, res = response) => {
-    try {
-        const { id } = req.params;
-        const { name, address, description, category, amenities } = req.body;
+  try {
+    const { id } = req.params;
+    const { name, address, description, category, amenities, admin } = req.body; 
 
-        const hotel = await Hotel.findById(id);
-        if (!hotel) {
-            return res.status(404).json({
-                success: false,
-                msg: "Hotel not found 🔍❌"
-            });
-        }
-
-        hotel.name = name || hotel.name;
-        hotel.address = address || hotel.address;
-        hotel.description = description || hotel.description;
-        hotel.category = category || hotel.category;
-        hotel.amenities = amenities || hotel.amenities;
-
-        await hotel.save();
-
-        res.status(200).json({
-            success: true,
-            msg: "Hotel updated successfully ✅",
-            hotel
-        });
-
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({
-            success: false,
-            msg: "Error updating hotel ❌",
-            error
-        });
+    const hotel = await Hotel.findById(id);
+    if (!hotel) {
+      return res.status(404).json({
+        success: false,
+        msg: "Hotel not found 🔍❌",
+      });
     }
+
+    hotel.name = name || hotel.name;
+    hotel.address = address || hotel.address;
+    hotel.description = description || hotel.description;
+    hotel.category = category || hotel.category;
+    hotel.amenities = amenities || hotel.amenities;
+    if (admin) hotel.admin = admin; 
+
+    await hotel.save();
+
+    res.status(200).json({
+      success: true,
+      msg: "Hotel updated successfully ✅",
+      hotel,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      msg: "Error updating hotel ❌",
+      error,
+    });
+  }
 };
+
 
 export const deleteHotel = async (req, res = response) => {
     try {
