@@ -85,41 +85,42 @@ export const getRoomById = async (req, res = response) => {
 };
 
 export const updateRoom = async (req, res = response) => {
-    try {
-        const { id } = req.params;
-        const { number, type, capacity, pricePerNight, description, available } = req.body;
+  try {
+    const { id } = req.params;
+    const { number, type, capacity, pricePerNight, description, available, hotel } = req.body;
 
-        const room = await Room.findById(id);
-        if (!room) {
-            return res.status(404).json({
-                success: false,
-                msg: "Room not found 🔍❌"
-            });
-        }
-
-        room.number = number || room.number;
-        room.type = type || room.type;
-        room.capacity = capacity || room.capacity;
-        room.pricePerNight = pricePerNight || room.pricePerNight;
-        room.description = description || room.description;
-        if (available !== undefined) room.available = available;
-
-        await room.save();
-
-        res.status(200).json({
-            success: true,
-            msg: "Room updated successfully ✅",
-            room
-        });
-
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({
-            success: false,
-            msg: "Error updating room ❌",
-            error
-        });
+    const room = await Room.findById(id);
+    if (!room) {
+      return res.status(404).json({
+        success: false,
+        msg: "Room not found 🔍❌"
+      });
     }
+
+    room.number = number || room.number;
+    room.type = type || room.type;
+    room.capacity = capacity || room.capacity;
+    room.pricePerNight = pricePerNight || room.pricePerNight;
+    room.description = description || room.description;
+    if (available !== undefined) room.available = available;
+    if (hotel) room.hotel = hotel;
+
+    await room.save();
+
+    res.status(200).json({
+      success: true,
+      msg: "Room updated successfully ✅",
+      room
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      msg: "Error updating room ❌",
+      error
+    });
+  }
 };
 
 export const deleteRoom = async (req, res = response) => {
@@ -150,4 +151,31 @@ export const deleteRoom = async (req, res = response) => {
             error
         });
     }
+};
+
+export const getRoomsByHotel = async (req, res = response) => {
+  try {
+    const { hotelId } = req.params;
+
+    const rooms = await Room.find({ hotel: hotelId, estado: true }).populate("hotel", "name address");
+
+    if (!rooms || rooms.length === 0) {
+      return res.status(404).json({
+        success: false,
+        msg: "No se encontraron habitaciones para este hotel ❌"
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      rooms
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      msg: "Error al obtener las habitaciones por hotel ❌",
+      error
+    });
+  }
 };

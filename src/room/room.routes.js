@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { check } from "express-validator";
-import { createRoom, getRooms, getRoomById, updateRoom, deleteRoom } from "./room.controller.js";
+import { createRoom, getRooms, getRoomById, updateRoom, deleteRoom, getRoomsByHotel } from "./room.controller.js";
 import { validarCampos } from "../middlewares/validar-campos.js";
 import { validarJWT } from "../middlewares/validar-jwt.js";
 import { tieneRole } from "../middlewares/validar-roles.js";
@@ -54,5 +54,7 @@ router.delete(
     ],
     deleteRoom
 );
+
+router.get("/hotel/:hotelId", getRoomsByHotel);
 
 export default router;
