@@ -1,10 +1,12 @@
 import { Router } from "express";
 import { check } from "express-validator";
-import { createReservation, getReservations, getReservationById, updateReservationStatus, deleteReservation } from "./reservation.controller.js";
+import { createReservation, getReservations, getReservationById, updateReservationStatus, deleteReservation, getReservationsByUsername, getReservationsByAdminHotel } from "./reservation.controller.js";
 import { validarCampos } from "../middlewares/validar-campos.js";
 import { validarJWT } from "../middlewares/validar-jwt.js";
 
 const router = Router();
+
+router.get("/by-username", getReservationsByUsername);
 
 router.get("/", getReservations);
 
@@ -49,6 +51,12 @@ router.delete(
         validarCampos
     ],
     deleteReservation
+);
+
+router.get(
+  "/by-admin/:adminId",
+  [validarJWT, check("adminId", "Invalid ID").isMongoId(), validarCampos],
+  getReservationsByAdminHotel
 );
 
 export default router;

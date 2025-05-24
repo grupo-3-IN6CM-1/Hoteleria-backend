@@ -1,6 +1,7 @@
 import { response } from "express";
 import Reservation from "./reservation.model.js";
 import Room from "../room/room.model.js";
+import Hotel from "../hotel/hotel.model.js"
 
 export const createReservation = async (req, res = response) => {
     try {
@@ -182,4 +183,73 @@ export const deleteReservation = async (req, res = response) => {
             error
         });
     }
+};
+
+export const getReservationsByUsername = async (req, res = response) => {
+  try {
+    const { username } = req.query;
+
+    if (!username) {
+      return res.status(400).json({
+        success: false,
+        msg: "El parámetro 'username' es obligatorio ❌"
+      });
+    }
+
+    const reservations = await Reservation.find({ estado: true })
+      .populate({
+        path: "user",
+        match: { username },
+        select: "username name email"
+      })
+      .populate("hotel", "name address")
+      .populate("room", "number type pricePerNight");
+
+    // Filtra las que sí tienen user (match exitoso)
+    const filtered = reservations.filter(r => r.user);
+
+    return res.status(200).json({
+      success: true,
+      reservations: filtered,
+    });
+
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      msg: "Error al obtener reservaciones ❌",
+      error
+    });
+  }
+};
+
+export const getReservationsByAdminHotel = async (req, res = response) => {
+  try {
+    const { adminId } = req.params;
+
+    const hotel = await Hotel.findOne({ admin: adminId });
+
+    if (!hotel) {
+      return res.status(404).json({
+        success: false,
+        msg: "Este administrador no tiene un hotel asignado ❌"
+      });
+    }
+
+    const reservations = await Reservation.find({ hotel: hotel._id, estado: true })
+      .populate("user", "name email")
+      .populate("room", "number type");
+
+    res.status(200).json({
+      success: true,
+      reservations
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      msg: "Error al obtener reservaciones del hotel por admin ❌",
+      error
+    });
+  }
 };
