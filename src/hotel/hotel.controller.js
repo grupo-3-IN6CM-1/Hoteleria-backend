@@ -160,3 +160,21 @@ export const deleteHotel = async (req, res = response) => {
         });
     }
 };
+
+export const getMyHotels = async (req, res) => {
+  try {
+    const { uid, role } = req.user;
+
+    if (role !== 'HOTEL_ADMIN') {
+      return res.status(403).json({ success: false, msg: 'No autorizado' });
+    }
+
+    const hotels = await Hotel.find({ admin: uid })
+      .populate('admin', 'username uid');
+
+    return res.json({ success: true, hotels });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ success: false, msg: 'Error interno' });
+  }
+};

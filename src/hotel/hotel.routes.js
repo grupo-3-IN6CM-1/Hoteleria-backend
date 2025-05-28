@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { check } from "express-validator";
-import { createHotel, getHotels, getHotelById, updateHotel, deleteHotel } from "./hotel.controller.js";
+import { createHotel, getHotels, getHotelById, getMyHotels, updateHotel, deleteHotel } from "./hotel.controller.js";
 import { validarCampos } from "../middlewares/validar-campos.js";
 import { validarJWT } from "../middlewares/validar-jwt.js";
 import { tieneRole } from "../middlewares/validar-roles.js";
@@ -8,6 +8,14 @@ import { tieneRole } from "../middlewares/validar-roles.js";
 const router = Router();
 
 router.get("/", getHotels);
+
+router.get(
+    '/my',
+    [
+        validarJWT
+    ], 
+    getMyHotels
+);
 
 router.get(
     "/:id",
