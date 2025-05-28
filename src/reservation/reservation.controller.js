@@ -257,3 +257,41 @@ export const getReservationsByAdminHotel = async (req, res = response) => {
     });
   }
 };
+
+export const getGuestsByAdminHotel = async (req, res) => {
+  try {
+    const adminId = req.usuario._id.toString();
+
+    const myHotels = await Hotel.find({ admin: adminId }).select("_id");
+    const hotelIds = myHotels.map(h => h._id);
+    if (hotelIds.length === 0) {
+      return res.status(404).json({
+        success: false,
+        msg: "No administras ningún hotel ❌"
+      });
+    }
+
+    const reservations = await Reservation.find({
+      hotel: { $in: hotelIds },
+      estado: true
+    })
+    .populate("user", "username email");
+
+    const map = new Map();
+    reservations.forEach(r => {
+      if (r.user && !map.has(r.user._id.toString())) {
+        map.set(r.user._id.toString(), r.user);
+      }
+    });
+    const guests = Array.from(map.values());
+
+    return res.json({ success: true, guests });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      msg: "Error intern o al obtener huéspedes ❌",
+      error
+    });
+  }
+};
