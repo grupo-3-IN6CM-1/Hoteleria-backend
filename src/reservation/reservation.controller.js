@@ -225,28 +225,32 @@ export const getReservationsByUsername = async (req, res = response) => {
 
 export const getReservationsByAdminHotel = async (req, res = response) => {
   try {
-    const { adminId } = req.params;
+    const adminId = req.usuario._id.toString();
 
-    const hotel = await Hotel.findOne({ admin: adminId });
-
-    if (!hotel) {
+    const myHotels = await Hotel.find({ admin: adminId }).select("_id");
+    const hotelIds = myHotels.map(h => h._id);
+    if (hotelIds.length === 0) {
       return res.status(404).json({
         success: false,
-        msg: "Este administrador no tiene un hotel asignado ❌"
+        msg: "No administras ningún hotel ❌"
       });
     }
 
-    const reservations = await Reservation.find({ hotel: hotel._id, estado: true })
-      .populate("user", "name email")
-      .populate("room", "number type");
+    const reservations = await Reservation.find({
+      hotel: { $in: hotelIds },
+      estado: true
+    })
+      .populate("user", "username email")
+      .populate("room", "number type")
+      .populate("hotel", "name");
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       reservations
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       msg: "Error al obtener reservaciones del hotel por admin ❌",
       error

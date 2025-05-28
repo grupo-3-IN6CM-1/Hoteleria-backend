@@ -11,6 +11,14 @@ router.get("/by-username", getReservationsByUsername);
 router.get("/", getReservations);
 
 router.get(
+  "/my",
+  [
+    validarJWT,
+  ],
+  getReservationsByAdminHotel
+);
+
+router.get(
     "/:id",
     [
         check("id", "Invalid reservation ID").isMongoId(),
@@ -51,12 +59,6 @@ router.delete(
         validarCampos
     ],
     deleteReservation
-);
-
-router.get(
-  "/by-admin/:adminId",
-  [validarJWT, check("adminId", "Invalid ID").isMongoId(), validarCampos],
-  getReservationsByAdminHotel
 );
 
 export default router;
