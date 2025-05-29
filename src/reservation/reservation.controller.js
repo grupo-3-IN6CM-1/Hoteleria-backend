@@ -1,6 +1,7 @@
 import { response } from "express";
 import Reservation from "./reservation.model.js";
 import Room from "../room/room.model.js";
+import User from "../user/user.model.js"
 import Hotel from "../hotel/hotel.model.js"
 
 export const createReservation = async (req, res = response) => {
@@ -188,37 +189,38 @@ export const deleteReservation = async (req, res = response) => {
 export const getReservationsByUsername = async (req, res = response) => {
   try {
     const { username } = req.query;
-
     if (!username) {
       return res.status(400).json({
         success: false,
-        msg: "El parámetro 'username' es obligatorio ❌"
+        msg: "El parámetro 'username' es obligatorio",
       });
     }
 
-    const reservations = await Reservation.find({ estado: true })
-      .populate({
-        path: "user",
-        match: { username },
-        select: "username name email"
-      })
-      .populate("hotel", "name address")
+    // Busca el usuario primero
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        msg: "Usuario no encontrado",
+      });
+    }
+
+    // Busca las reservas del usuario
+    const reservations = await Reservation.find({
+      estado: true,
+      user: user._id,
+    })
+      .populate("user", "username name email _id")
+      .populate("hotel", "name _id")
       .populate("room", "number type pricePerNight");
 
-    // Filtra las que sí tienen user (match exitoso)
-    const filtered = reservations.filter(r => r.user);
-
-    return res.status(200).json({
-      success: true,
-      reservations: filtered,
-    });
-
+    res.json({ success: true, reservations });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({
+    res.status(500).json({
       success: false,
-      msg: "Error al obtener reservaciones ❌",
-      error
+      msg: "Error al obtener reservaciones",
+      error,
     });
   }
 };
@@ -291,6 +293,97 @@ export const getGuestsByAdminHotel = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Error intern o al obtener huéspedes ❌",
+      error
+    });
+  }
+};
+
+export const getTopRooms = async (req, res = response) => {
+  try {
+    const topRooms = await Reservation.aggregate([
+      {
+        $match: { estado: true }
+      },
+      {
+        $lookup: {
+          from: "rooms",
+          localField: "room",
+          foreignField: "_id",
+          as: "roomInfo"
+        }
+      },
+      { $unwind: "$roomInfo" },
+      {
+        $group: {
+          _id: "$roomInfo.type",
+          count: { $sum: 1 }
+        }
+      },
+      {
+        $project: {
+          roomType: "$_id",
+          count: 1,
+          _id: 0
+        }
+      },
+      { $sort: { count: -1 } },
+      { $limit: 10 }
+    ]);
+
+    res.status(200).json({
+      success: true,
+      topRooms
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      msg: "Error al obtener habitaciones más cotizadas ❌",
+      error
+    });
+  }
+};
+
+export const getTopHotels = async (req, res) => {
+  try {
+    const topHotels = await Reservation.aggregate([
+      { $match: { estado: true } },
+      {
+        $group: {
+          _id: "$hotel",
+          count: { $sum: 1 }
+        }
+      },
+      {
+        $lookup: {
+          from: "hotels",
+          localField: "_id",
+          foreignField: "_id",
+          as: "hotelInfo"
+        }
+      },
+      { $unwind: "$hotelInfo" },
+      {
+        $project: {
+          name: "$hotelInfo.name",
+          count: 1,
+          _id: 0
+        }
+      },
+      { $sort: { count: -1 } },
+      { $limit: 10 }
+    ]);
+
+    res.status(200).json({
+      success: true,
+      topHotels
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      msg: "Error al obtener hoteles más solicitados ❌",
       error
     });
   }

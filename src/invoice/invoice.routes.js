@@ -5,7 +5,7 @@ import {
     getInvoices,
     getInvoiceById,
     updateInvoiceStatus,
-    deleteInvoice
+    deleteInvoice   
 } from "./invoice.controller.js";
 import { validarCampos } from "../middlewares/validar-campos.js";
 import { validarJWT } from "../middlewares/validar-jwt.js";
@@ -28,12 +28,7 @@ router.post(
     "/",
     [
         validarJWT,
-        tieneRole("PLATFORM_ADMIN", "HOTEL_ADMIN"),
-        check("reservation", "Reservation ID is required").isMongoId(),
         check("hotel", "Hotel ID is required").isMongoId(),
-        check("user", "User ID is required").isMongoId(),
-        check("amount", "Amount is required and must be positive").isFloat({ min: 0 }),
-        check("total", "Total is required and must be positive").isFloat({ min: 0 }),
         validarCampos
     ],
     createInvoice

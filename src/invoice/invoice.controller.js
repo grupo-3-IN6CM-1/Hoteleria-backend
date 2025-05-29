@@ -33,7 +33,7 @@ export const createInvoice = async (req, res = response) => {
         res.status(500).json({
             success: false,
             msg: "Error creating invoice ❌",
-            error
+            error: error.message
         });
     }
 };

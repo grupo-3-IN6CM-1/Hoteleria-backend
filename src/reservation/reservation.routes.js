@@ -1,10 +1,19 @@
 import { Router } from "express";
 import { check } from "express-validator";
-import { createReservation, getReservations, getReservationById, getGuestsByAdminHotel , updateReservationStatus, deleteReservation, getReservationsByUsername, getReservationsByAdminHotel } from "./reservation.controller.js";
+import { createReservation, getReservations, getReservationById, getGuestsByAdminHotel , updateReservationStatus, deleteReservation, getReservationsByUsername, getReservationsByAdminHotel, getTopRooms, getTopHotels } from "./reservation.controller.js";
 import { validarCampos } from "../middlewares/validar-campos.js";
 import { validarJWT } from "../middlewares/validar-jwt.js";
 
 const router = Router();
+
+router.get(
+  "/top-rooms",
+  validarJWT,
+  getTopRooms
+);
+
+router.get("/top-hotels", validarJWT, getTopHotels);
+
 
 router.get("/by-username", getReservationsByUsername);
 
@@ -68,5 +77,7 @@ router.delete(
     ],
     deleteReservation
 );
+
+
 
 export default router;
