@@ -1,11 +1,27 @@
 import { Router } from "express";
-import { updateMyProfile, updateUserByAdmin, getUsersByRole, getClients} from "../user/user.controller.js";
+import { updateMyProfile, updateUserByAdmin, getUsersByRole  , getAllUsers , getMyProfile} from "../user/user.controller.js";
 import { validarJWT } from "../middlewares/validar-jwt.js";
 import { tieneRole } from "../middlewares/validar-roles.js"; 
 import { check } from "express-validator";
 import { validarCampos } from "../middlewares/validar-campos.js";
 
 const router = Router();
+
+router.get("/all", 
+  [
+    validarJWT,
+    tieneRole("PLATFORM_ADMIN"), 
+  ],
+  getAllUsers
+);
+
+router.get(
+  "/me",
+  [
+    validarJWT
+  ],
+  getMyProfile
+);
 
 router.put(
   "/me/:id",
@@ -37,9 +53,6 @@ router.get(
   ],
   getUsersByRole
 );
-
-router.get("/clients", getClients);
-
 
 
 export default router;

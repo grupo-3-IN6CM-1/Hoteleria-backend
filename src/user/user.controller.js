@@ -118,19 +118,33 @@ export const getUsersByRole = async (req, res) => {
   }
 };
 
-export const getClients = async (req, res) => {
+export const getAllUsers = async (req, res) => {
   try {
-    const clients = await User.find({ role: "CLIENT", estado: true }).select("name surname email");
-    res.status(200).json({
+    const users = await User.find({ estado: true }).select("name email username role");
+
+    return res.status(200).json({
       success: true,
-      clients,
+      users,
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
-      msg: "Error al obtener clientes ❌",
-      error,
+      msg: "Error al obtener usuarios",
+      error: error.message,
     });
+  }
+};
+
+export const getMyProfile = async (req, res) => {
+  try {
+    const userId = req.usuario._id;
+    const user = await User.findById(userId).select("username email name role");
+    if (!user) {
+      return res.status(404).json({ success: false, msg: "Usuario no encontrado" });
+    }
+    res.json({ success: true, user });
+  } catch (error) {
+    res.status(500).json({ success: false, msg: "Error al obtener perfil", error: error.message });
   }
 };
