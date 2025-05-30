@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { updateMyProfile, updateUserByAdmin, getUsersByRole } from "../user/user.controller.js";
+import { updateMyProfile, updateUserByAdmin, getUsersByRole, getClients} from "../user/user.controller.js";
 import { validarJWT } from "../middlewares/validar-jwt.js";
 import { tieneRole } from "../middlewares/validar-roles.js"; 
 import { check } from "express-validator";
@@ -37,6 +37,9 @@ router.get(
   ],
   getUsersByRole
 );
+
+router.get("/clients", getClients);
+
 
 
 export default router;

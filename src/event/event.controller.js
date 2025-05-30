@@ -37,8 +37,20 @@ export const createEvent = async (req, res = response) => {
 
 export const getEvents = async (req, res = response) => {
     try {
-        const events = await Event.find({ estado: true })
-            .populate("user", "name email")
+        const { hotelId, userId } = req.query;
+
+        const filter = { estado: true };
+
+        if (hotelId) {
+            filter.hotel = hotelId;
+        }
+
+        if (userId) {
+            filter.user = userId;
+        }
+
+        const events = await Event.find(filter)
+            .populate("user", "name email surname")
             .populate("hotel", "name")
             .populate("resources")
             .populate("services");

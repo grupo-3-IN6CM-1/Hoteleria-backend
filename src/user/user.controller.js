@@ -117,3 +117,20 @@ export const getUsersByRole = async (req, res) => {
     });
   }
 };
+
+export const getClients = async (req, res) => {
+  try {
+    const clients = await User.find({ role: "CLIENT", estado: true }).select("name surname email");
+    res.status(200).json({
+      success: true,
+      clients,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      msg: "Error al obtener clientes ❌",
+      error,
+    });
+  }
+};
